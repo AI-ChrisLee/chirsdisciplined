@@ -5,34 +5,35 @@ export async function middleware(request: NextRequest) {
   // Update session
   const response = await updateSession(request)
 
+  // TEMPORARILY DISABLED AUTH FOR DEVELOPMENT
   // Protected routes
-  const protectedPaths = [
-    '/dashboard',
-    '/account',
-    '/settings',
-    '/progress',
-    '/morning-protocol',
-    '/evening-review',
-    '/affirmations',
-    '/vision-board'
-  ]
+  // const protectedPaths = [
+  //   '/dashboard',
+  //   '/account',
+  //   '/settings',
+  //   '/progress',
+  //   '/morning-protocol',
+  //   '/evening-review',
+  //   '/affirmations',
+  //   '/vision-board'
+  // ]
 
-  const path = request.nextUrl.pathname
-  const isProtectedPath = protectedPaths.some(protectedPath => 
-    path.startsWith(protectedPath)
-  )
+  // const path = request.nextUrl.pathname
+  // const isProtectedPath = protectedPaths.some(protectedPath => 
+  //   path.startsWith(protectedPath)
+  // )
 
-  if (isProtectedPath) {
-    // Check if user is authenticated by looking for session cookie
-    const hasSession = request.cookies.has('sb-jnaklynwyuqmmsznbtet-auth-token')
+  // if (isProtectedPath) {
+  //   // Check if user is authenticated by looking for session cookie
+  //   const hasSession = request.cookies.has('sb-jnaklynwyuqmmsznbtet-auth-token')
     
-    if (!hasSession) {
-      // Redirect to sign in if trying to access protected route without session
-      const redirectUrl = new URL('/signin', request.url)
-      redirectUrl.searchParams.set('redirectTo', path)
-      return NextResponse.redirect(redirectUrl)
-    }
-  }
+  //   if (!hasSession) {
+  //     // Redirect to sign in if trying to access protected route without session
+  //     const redirectUrl = new URL('/signin', request.url)
+  //     redirectUrl.searchParams.set('redirectTo', path)
+  //     return NextResponse.redirect(redirectUrl)
+  //   }
+  // }
 
   return response
 }

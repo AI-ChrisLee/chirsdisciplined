@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { 
   Play, Pause, Mic, StopCircle, CheckCircle,
   Moon, Sun, Target, Volume2, Edit2, 
@@ -258,11 +259,15 @@ The Operating System for Human Subconscious**`);    }
     if (storedImages) {
       setVisionImages(JSON.parse(storedImages));
     } else {
+      // Use local optimized images from Example folder
       setVisionImages([
-        'https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=1200',
-        'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200',
-        'https://images.unsplash.com/photo-1491336477066-31156b5e4f35?w=1200',
-        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200'
+        '/Example/11.png',
+        '/Example/12.png',
+        '/Example/13.png',
+        '/Example/14.png',
+        '/Example/15.png',
+        '/Example/16.png',
+        '/Example/17.png'
       ]);
     }
 
@@ -584,11 +589,15 @@ The Operating System for Human Subconscious**`);    }
                     <div className="grid grid-cols-2 gap-4 mb-4">
                       {visionImages.map((img, i) => (
                         <div key={i} className="relative group aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
-                          <img 
+                          <Image 
                             src={img} 
                             alt={`Vision ${i + 1}`} 
+                            width={400}
+                            height={300}
                             className="w-full h-full object-cover cursor-pointer" 
                             onClick={() => !editingVision && setEnlargedImage(img)}
+                            loading="lazy"
+                            quality={85}
                           />
                           {!editingVision && (
                             <button
@@ -1004,11 +1013,14 @@ The Operating System for Human Subconscious**`);    }
           >
             ×
           </button>
-          <img 
+          <Image 
             src={enlargedImage} 
             alt="Enlarged vision" 
+            width={1200}
+            height={900}
             className="max-w-full max-h-full object-contain"
             onClick={(e) => e.stopPropagation()}
+            quality={90}
           />
         </div>
       )}

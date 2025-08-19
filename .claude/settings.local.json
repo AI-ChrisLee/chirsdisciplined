@@ -39,7 +39,9 @@
       "Bash(curl:*)",
       "Bash(git reset:*)",
       "Bash(VERCEL_TOKEN=GMb9LB9zKz0hzbQaimF4dmto vercel link --yes --project=chris-disciplined)",
-      "Bash(VERCEL_TOKEN=GMb9LB9zKz0hzbQaimF4dmto vercel ls chris-disciplined)"
+      "Bash(VERCEL_TOKEN=GMb9LB9zKz0hzbQaimF4dmto vercel ls chris-disciplined)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
