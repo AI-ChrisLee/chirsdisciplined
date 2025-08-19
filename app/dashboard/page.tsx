@@ -58,12 +58,16 @@ export default function DashboardPage() {
   const recordingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const mockUser = localStorage.getItem('mockUser');
-    if (!mockUser) {
-      router.push('/signin');
-    } else {
-      setUser(JSON.parse(mockUser));
-    }
+    // Temporarily disabled auth for development
+    // const mockUser = localStorage.getItem('mockUser');
+    // if (!mockUser) {
+    //   router.push('/signin');
+    // } else {
+    //   setUser(JSON.parse(mockUser));
+    // }
+    
+    // Set default user for development
+    setUser({ name: 'Chris', email: 'chris@disciplined.com' });
 
     // Load saved data
     const storedAffirmations = localStorage.getItem('generatedAffirmations');

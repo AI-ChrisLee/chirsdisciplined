@@ -18,12 +18,12 @@ export default function SettingsPage() {
   });
 
   useEffect(() => {
-    // Check authentication
-    const mockUser = localStorage.getItem('mockUser');
-    if (!mockUser) {
-      router.push('/signin');
-      return;
-    }
+    // Temporarily disabled auth for development
+    // const mockUser = localStorage.getItem('mockUser');
+    // if (!mockUser) {
+    //   router.push('/signin');
+    //   return;
+    // }
 
     // Load saved settings
     const savedSettings = localStorage.getItem('userSettings');

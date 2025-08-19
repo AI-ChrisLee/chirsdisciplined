@@ -22,14 +22,17 @@ export default function AccountPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Check authentication
-    const mockUser = localStorage.getItem('mockUser');
-    if (!mockUser) {
-      router.push('/signin');
-      return;
-    }
+    // Temporarily disabled auth for development
+    // const mockUser = localStorage.getItem('mockUser');
+    // if (!mockUser) {
+    //   router.push('/signin');
+    //   return;
+    // }
 
-    const user = JSON.parse(mockUser);
+    // const user = JSON.parse(mockUser);
+    
+    // Set default user for development
+    const user = { email: 'chris@disciplined.com', name: 'Chris' };
     
     // Mock additional user data
     const enrichedUser = {

@@ -17,14 +17,14 @@ export default function ProgressPage() {
   });
 
   useEffect(() => {
-    // Check authentication
-    if (typeof window === 'undefined') return;
-    
-    const mockUser = localStorage.getItem('mockUser');
-    if (!mockUser) {
-      router.push('/signin');
-      return;
-    }
+    // Temporarily disabled auth for development
+    // if (typeof window === 'undefined') return;
+    // 
+    // const mockUser = localStorage.getItem('mockUser');
+    // if (!mockUser) {
+    //   router.push('/signin');
+    //   return;
+    // }
 
     // Mock streak data (in production, this would come from backend)
     setStreakData({

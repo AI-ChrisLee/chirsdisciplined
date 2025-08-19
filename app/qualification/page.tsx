@@ -214,7 +214,7 @@ export default function QualificationPage() {
                       Processing...
                     </span>
                   ) : (
-                    'Get The Protocol - Arrives September 1st →'
+                    'Get The Protocol →'
                   )}
                 </button>
                 
