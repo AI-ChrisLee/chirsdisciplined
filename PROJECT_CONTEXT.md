@@ -301,8 +301,8 @@ Daily workflow:
 /app/account/page.tsx         - Not using yet
 /app/settings/page.tsx        - Premature
 /app/dashboard/setup/         - Old flow
-/DailyRich/Masterdoc.md      - Outdated
-/DailyRich/plan2.md          - Superseded by LAUNCH_PLAN
+/Chris/Masterdoc.md          - Outdated
+/Chris/plan2.md              - Superseded by LAUNCH_PLAN
 /app/dashboard/page.tsx.bak2 - Backup file
 /services/                   - Empty folder
 /hooks/                      - Empty folder

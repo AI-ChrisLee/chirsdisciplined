@@ -56,7 +56,7 @@ export default function TermsPage() {
               We offer NO GUARANTEES of specific results. The system works if you work. Complete the daily protocol with perfect consistency and transformation is inevitable. Miss one day and you start over. This is neuroscience, not our rule.
             </p>
             <p className="text-gray-700 mb-4">
-              If you need guarantees, you're not ready for transformation. Transformation requires burning the boats. The $997 with no refund is your boat burning ceremony.
+              If you need guarantees, you&apos;re not ready for transformation. Transformation requires burning the boats. The $997 with no refund is your boat burning ceremony.
             </p>
           </section>
 
@@ -105,7 +105,7 @@ export default function TermsPage() {
               We maintain premium pricing because:
             </p>
             <ul className="list-disc list-inside text-gray-700 mb-4 space-y-2">
-              <li>The price ensures execution—you don't ignore something costing $997/month</li>
+              <li>The price ensures execution—you don&apos;t ignore something costing $997/month</li>
               <li>Monthly renewal creates monthly recommitment</li>
               <li>Premium price filters for serious transformers only</li>
               <li>Investment psychology creates identity shift</li>
@@ -160,7 +160,7 @@ export default function TermsPage() {
               Chris Disciplined is NOT medical or psychological treatment. We are a training system based on neuroscience research from MIT, Harvard, and Stanford. We do not diagnose, treat, cure, or prevent any medical condition.
             </p>
             <p className="text-gray-700 mb-4">
-              You are 100% responsible for your transformation. We provide the protocol based on peer-reviewed neuroscience. You must execute it perfectly for it to work. If you don't execute, nothing happens. This is your responsibility, not ours.
+              You are 100% responsible for your transformation. We provide the protocol based on peer-reviewed neuroscience. You must execute it perfectly for it to work. If you don&apos;t execute, nothing happens. This is your responsibility, not ours.
             </p>
             <p className="text-gray-700 mb-4">
               Chris Disciplined is not liable for any results or lack of results. By using our Service, you accept full responsibility for your actions and outcomes.

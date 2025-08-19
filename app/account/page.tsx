@@ -2,12 +2,23 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { User, Mail, Calendar, CreditCard, Shield, LogOut, ChevronRight, AlertCircle, Check } from 'lucide-react';
-import Link from 'next/link';
+import { User, Mail, Calendar, CreditCard, Shield, LogOut, AlertCircle, Check } from 'lucide-react';
+import Navigation from '@/components/Navigation';
 
 export default function AccountPage() {
   const router = useRouter();
-  const [userData, setUserData] = useState<any>(null);
+  interface UserData {
+    email: string;
+    name: string;
+    memberNumber: string;
+    joinDate: string;
+    subscriptionStatus: string;
+    nextBilling: string;
+    planName: string;
+    planPrice: number;
+    lockedPrice: boolean;
+  }
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -62,36 +73,29 @@ export default function AccountPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+      <Navigation />
+      
+      {/* Page Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Account</h1>
-              <p className="text-sm text-gray-600 mt-1">Manage your membership and billing</p>
-            </div>
-            <Link 
-              href="/dashboard"
-              className="text-sm text-gray-600 hover:text-black transition-colors flex items-center gap-1"
-            >
-              Back to Dashboard
-              <ChevronRight className="w-4 h-4" />
-            </Link>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Account</h1>
+            <p className="text-sm text-gray-600 mt-1">Manage your membership and billing</p>
           </div>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Founding Member Badge */}
-        <div className="bg-black text-white rounded-lg p-6 mb-6">
+        <div className="bg-white border-2 border-gray-900 rounded-lg p-6 mb-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-bold mb-2">Founding Member #{userData.memberNumber}</h2>
-              <p className="text-sm opacity-90">
-                You're one of the first 50 members. Your $997/month rate is locked forever.
+              <h2 className="text-xl font-bold mb-2 text-gray-900">Founding Member #{userData.memberNumber}</h2>
+              <p className="text-sm text-gray-600">
+                You&apos;re one of the first 50 members. Your $997/month rate is locked forever.
               </p>
             </div>
-            <Shield className="w-12 h-12 text-yellow-400" />
+            <Shield className="w-12 h-12 text-gray-900" />
           </div>
         </div>
 
@@ -227,7 +231,7 @@ export default function AccountPage() {
               <Check className="w-5 h-5 text-green-500 mt-0.5" />
               <div>
                 <p className="font-medium text-gray-900">Direct Founder Access</p>
-                <p className="text-sm text-gray-600">Chris Disciplined's personal guidance</p>
+                <p className="text-sm text-gray-600">Chris Disciplined&apos;s personal guidance</p>
               </div>
             </div>
           </div>
@@ -246,7 +250,7 @@ export default function AccountPage() {
                   <p className="font-medium text-gray-900">Cancel Subscription</p>
                   <p className="text-sm text-gray-600 mb-3">
                     Once you cancel, you lose your $997 founding member rate forever. 
-                    If you rejoin, you'll pay the current rate (currently $1,497/month).
+                    If you rejoin, you&apos;ll pay the current rate (currently $1,497/month).
                   </p>
                   <button 
                     onClick={handleCancelSubscription}

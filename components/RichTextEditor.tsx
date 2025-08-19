@@ -4,7 +4,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import { 
-  Bold, Italic, Underline, Strikethrough, 
+  Bold, Italic, Strikethrough, 
   Heading1, Heading2, Heading3,
   List, ListOrdered, Quote, Undo, Redo
 } from 'lucide-react';
@@ -34,7 +34,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     },
     editorProps: {
       attributes: {
-        class: 'prose prose-sm max-w-none focus:outline-none min-h-[600px] p-6'
+        class: 'prose prose-lg max-w-none focus:outline-none min-h-[600px] p-6 text-lg'
       }
     },
     immediatelyRender: false // Fix SSR hydration mismatch
@@ -173,6 +173,8 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
       <style jsx global>{`
         .ProseMirror {
           min-height: 600px;
+          font-size: 1.125rem;
+          line-height: 1.75rem;
         }
         
         .ProseMirror p.is-editor-empty:first-child::before {

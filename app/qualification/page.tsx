@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowRight, Target, Clock, DollarSign, Youtube } from 'lucide-react';
+import { ArrowRight, Target, Clock, DollarSign } from 'lucide-react';
 
 export default function QualificationPage() {
   const router = useRouter();
@@ -14,6 +14,8 @@ export default function QualificationPage() {
   });
   const [showResult, setShowResult] = useState(false);
   const [isQualified, setIsQualified] = useState(false);
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const questions = [
     {
@@ -114,107 +116,114 @@ export default function QualificationPage() {
     }
   };
 
-  const handleProceed = () => {
-    // Save qualification status
-    localStorage.setItem('qualificationStatus', JSON.stringify({
-      qualified: true,
-      answers: answers,
-      timestamp: new Date().toISOString()
-    }));
-    
-    // Redirect to payment page
-    router.push('/payment');
-  };
-
-  const handleYouTube = () => {
-    // In production, this would open YouTube channel
-    window.open('https://youtube.com/@chrisdisciplined', '_blank');
-  };
 
   if (showResult) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center px-4">
         <div className="max-w-2xl w-full">
-          {isQualified ? (
-            // Qualified Result
-            <div className="text-center animate-fade-in">
-              <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center mx-auto mb-8">
-                <Target className="w-10 h-10 text-white" />
-              </div>
-              
-              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-black mb-6">
-                You Get It. You're Ready.
-              </h2>
-              
-              <p className="text-lg text-gray-600 mb-10 max-w-md mx-auto">
-                Your subconscious is already changing by making this decision.
-              </p>
-
-              <button
-                onClick={handleProceed}
-                className="btn-primary mx-auto"
-              >
-                Begin Your Transformation
-                <ArrowRight className="w-5 h-5" />
-              </button>
-
-              <p className="text-xs text-gray-500 mt-8">
-                Only 47 founding member spots remaining at $997/month
-              </p>
+          <div className="text-center animate-fade-in">
+            <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center mx-auto mb-8">
+              <Target className="w-10 h-10 text-white" />
             </div>
-          ) : (
-            // Not Qualified Result
-            <div className="text-center animate-fade-in">
-              <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center mx-auto mb-8">
-                <Target className="w-10 h-10 text-white" />
-              </div>
-              
-              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-black mb-6">
-                You're Not Ready... Yet
-              </h2>
-              
-              <p className="text-lg text-gray-600 mb-10 max-w-md mx-auto">
-                But I respect that you're here. Let me help you get ready.
-              </p>
+            
+            <h2 className="text-4xl sm:text-5xl font-serif font-bold text-black mb-6">
+              The Violent Morning Protocol
+            </h2>
+            
+            <p className="text-lg text-gray-600 mb-10 max-w-md mx-auto">
+              Your 7-day morning transformation blueprint to reprogram your subconscious.
+            </p>
 
-              <div className="max-w-md mx-auto">
-                <div className="border-2 border-black rounded-lg p-8 mb-6 bg-white">
-                  <h3 className="text-xl font-bold mb-4 text-black">
-                    Get The $997 Readiness Protocol
-                  </h3>
-                  <p className="text-sm mb-6 text-gray-700">
-                    I'll send you the exact mental training I used to make $997/month feel like nothing. 
-                    This isn't motivation—it's neuroscience.
-                  </p>
-                  
-                  <input
-                    type="email"
-                    placeholder="Enter your best email"
-                    className="w-full px-4 py-3 rounded border border-gray-300 focus:outline-none focus:border-black mb-4"
-                    required
-                  />
-                  
-                  <button className="w-full bg-black text-white font-bold py-3 rounded hover:bg-gray-800 transition-colors">
-                    Send Me The Protocol →
-                  </button>
-                  
-                  <p className="text-xs mt-4 text-gray-600">
-                    You'll also get daily transformation principles. Unsubscribe anytime.
-                  </p>
-                </div>
-
-                <p className="text-sm text-gray-600">
-                  When you're ready to invest $997/month without hesitation,{' '}
-                  <button
-                    onClick={() => window.location.reload()}
-                    className="font-bold text-black underline"
-                  >
-                    retake the qualification
-                  </button>
+            <div className="max-w-md mx-auto">
+              <div className="border-2 border-black rounded-lg p-8 mb-6 bg-white">
+                <h3 className="text-xl font-bold mb-4 text-black">
+                  Get The Violent Morning Protocol
+                </h3>
+                <p className="text-sm mb-6 text-gray-700">
+                  We'll send you the complete protocol on September 1st. 
+                  Be ready to transform your mornings and your life.
+                </p>
+                
+                <input
+                  type="email"
+                  placeholder="Enter your best email"
+                  className="w-full px-4 py-3 rounded border border-gray-300 focus:outline-none focus:border-black mb-4"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                
+                <button 
+                  onClick={async () => {
+                    if (!email) return;
+                    
+                    setIsLoading(true);
+                    
+                    // Save lead with email
+                    localStorage.setItem('qualification_email', email);
+                    localStorage.setItem('qualificationStatus', JSON.stringify({
+                      qualified: isQualified,
+                      answers: answers,
+                      timestamp: new Date().toISOString()
+                    }));
+                    
+                    try {
+                      await fetch('/api/leads', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          email,
+                          status: isQualified ? 'qualified' : 'unqualified',
+                          qualification_answers: answers
+                        })
+                      });
+                      
+                      if (isQualified) {
+                        // Join waitlist for qualified users
+                        await fetch('/api/leads', {
+                          method: 'PUT',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            email,
+                            action: 'join_waitlist'
+                          })
+                        });
+                      }
+                      
+                      // Add a small delay to show loading state
+                      await new Promise(resolve => setTimeout(resolve, 1500));
+                      
+                      // Redirect to protocol download page
+                      router.push('/protocol-download');
+                    } catch (error) {
+                      console.error('Error:', error);
+                      // Still redirect even if API fails
+                      await new Promise(resolve => setTimeout(resolve, 1500));
+                      router.push('/protocol-download');
+                    }
+                  }}
+                  disabled={isLoading}
+                  className="w-full bg-black text-white font-bold py-3 rounded hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Processing...
+                    </span>
+                  ) : (
+                    'Get The Protocol - Arrives September 1st →'
+                  )}
+                </button>
+                
+                <p className="text-xs mt-4 text-gray-600">
+                  No spam. Unsubscribe anytime.
                 </p>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     );
@@ -291,6 +300,7 @@ export default function QualificationPage() {
           </p>
         </div>
       </div>
+
     </div>
   );
 }

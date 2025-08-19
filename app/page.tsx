@@ -83,11 +83,11 @@ export default function LandingPage() {
             onClick={handleApplyNow}
             className="w-full sm:w-auto bg-black text-white px-8 sm:px-12 py-4 sm:py-5 text-base sm:text-lg font-medium rounded-lg hover:bg-gray-900 transition-all duration-300 inline-flex items-center justify-center gap-2 sm:gap-3 shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5"
           >
-            Apply for Founding Membership
+            Get The Violent Morning Protocol
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
           <p className="text-gray-500 text-xs sm:text-sm mt-4 sm:mt-6">
-            Limited to 500 founding members
+            Free 7-day morning transformation blueprint
           </p>
           <p className="text-gray-600 text-sm sm:text-base mt-2">
             Already a member?{' '}

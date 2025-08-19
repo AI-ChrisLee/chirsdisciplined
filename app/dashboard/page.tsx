@@ -8,19 +8,23 @@ import {
   Moon, Sun, Target, Volume2, Edit2, 
   Save, X, Plus, Trash2, Calendar,
   Trophy, Flame, Brain, ImagePlus,
-  BarChart3, User, Settings, LogOut, Expand,
-  TrendingUp, UserCircle, Cog
+  BarChart3, User, Settings, LogOut, Expand
 } from 'lucide-react';
-import Link from 'next/link';
+import Navigation from '@/components/Navigation';
 
 const RichTextEditor = dynamic(() => import('@/components/RichTextEditor'), { 
   ssr: false,
   loading: () => <div className="h-96 bg-gray-50 rounded-lg animate-pulse" />
 });
 
+const AffirmationEditor = dynamic(() => import('@/components/AffirmationEditor'), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-gray-50 rounded-lg animate-pulse" />
+});
+
 export default function DashboardPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{ name?: string; email?: string } | null>(null);
   const [currentTime, setCurrentTime] = useState(new Date());
   
   // Core States
@@ -28,7 +32,7 @@ export default function DashboardPage() {
   const [affirmations, setAffirmations] = useState('');  // HTML content for rich text
   const [visionImages, setVisionImages] = useState<string[]>([]);
   const [violentAction, setViolentAction] = useState('');
-  const [todaysRecording, setTodaysRecording] = useState<any>(null);
+  const [todaysRecording, setTodaysRecording] = useState<string | null>(null);
   
   // Recording States
   const [isRecording, setIsRecording] = useState(false);
@@ -66,121 +70,184 @@ export default function DashboardPage() {
     if (storedAffirmations) {
       setAffirmations(storedAffirmations);
     } else {
-      // 10-minute script with rich formatting
-      setAffirmations(`<h1>THE CHRIS DISCIPLINED TRANSFORMATION PROTOCOL</h1>
+      // Default affirmations from Chris Affirmation.md
+      setAffirmations(`## 1. The Vision Board
 
-<br>
+*2X4 Full Grid (8 images total) - Each image represents your transformed reality*
 
-<h2>NEURAL RECONSTRUCTION BEGINS NOW</h2>
+> Read with maximum conviction! Feel every word in your bones! Your voice commands your subconscious! This is neural reprogramming in real time!
 
-<p><strong>5:30am—I DETONATE into hyperconscious state!</strong></p>
+---
 
-<p>Vision board floods my neurons with pre-lived success. Eight images bypass logic, installing $10 trillion certainty directly into my subconscious processor.</p>
+## 2. Core Identity - Universal Truth (Simplified)
 
-<br>
+1. **My beliefs create my reality.** What I believe becomes true through violent action. I program my subconscious, take massive action, get feedback, iterate, and perfect the process.
+2. **Everything is my responsibility.** No external forces. No excuses. I created where I am. I create where I'm going. I am the builder and destroyer of all limits.
+3. **I am consciousness experiencing itself.** Not a body with limits but infinite potential creating reality through thoughts, beliefs, and actions.
+4. **I am the lowest version of myself I can accept.** I don't chase dreams—I set standards so high that my current self must die for the new one to live.
+5. **I see my patterns and break them.** The war between who I am and who I'm becoming creates growth. I catch the lows and feed the highs.
+6. **Evolution requires facing darkness.** When comfort stops working, I face what terrifies me. Everything is becoming. The question is: Who am I becoming?
+7. **My mind stacks rocks on scales.** Each thought adds weight to a belief. The heaviest side becomes my reality. I consciously stack rocks for the reality I choose.
+8. **I control mental feedback loops.** Thoughts create thoughts in endless cycles. I catch downward spirals instantly and feed upward momentum violently.
+9. **I am the programmer, not the program.** My character tried to run me. Now I design who I need to be and grow into it with violent discipline.
 
-<h2>CORE IDENTITY - UNIVERSAL TRUTH</h2>
+---
 
-<p><strong>Reality bends to my mental architecture.</strong> My neural patterns create my external world with mathematical precision. I architect my thoughts, which forge my beliefs, which materialize as reality. I am the programmer of my own consciousness, debugging limiting code and installing power protocols that execute flawlessly in real-time.</p>
+## 3. The Manifesto (Simplified)
 
-<p><strong>I am the sole architect of my existence.</strong> Every circumstance, every achievement, every setback—I authored them all. No victim stories, no external villains, just pure ownership. I am simultaneously the sculptor, the marble, and the masterpiece emerging!</p>
+1. **I am Chris Disciplined, founder of Chris**—the Operating System for Human Subconscious. I built what nobody else could: systematic transformation at scale. I didn't create an app. I created human evolution technology.
+2. **I lead the Subconscious Revolution** transforming millions daily. Chris is the bridge between thought and reality. The system that makes transformation mathematical, not mystical. Dreamers become builders. Thinkers become titans.
+3. **I operate from New York**, building from Manhattan's towers. My team builds humanity's mental infrastructure. My penthouse is my command center. My morning protocol programs trillion-dollar thinking. My execution is surgical precision.
+4. **Chris serves 500 million humans** generating $50 billion monthly. We are the global standard. The default transformation system. What universities couldn't build. What Silicon Valley couldn't code. What humanity needed but nobody created.
+5. **I am the #1 founder globally.** Not for wealth but for human transformation delivered. Every government studies our methods. Every corporation uses our system. Every school teaches our protocol. Subconscious training is now as essential as literacy.
+6. **My work becomes civilization's foundation.** Books, systems, protocols—all become humanity's operating manual. Billions follow the Chris Method. Human potential is no longer potential—it's guaranteed through systematic training.
+7. **My mind operates at a different frequency.** I unified neuroscience, philosophy, psychology, and technology into ONE system. I don't predict trends—I create them. I didn't build a company—I upgraded humanity. **I am the one.**
 
-<p>I am pure consciousness experiencing itself through this biological interface. What appears as physical limitation is merely unoptimized code in my mental operating system. I rewrite my source code daily, upgrade my capabilities hourly, and transcend yesterday's ceiling every morning.</p>
+---
 
-<br>
+## 4. Personal Identity
 
-<h2>PERSONAL IDENTITY</h2>
+1. **Disciplined** like Jocko—5:30am rise, 9pm sleep, zero excuses, perfect execution daily!
+2. **Obsessive** like Musk—Chris is life, mission, and obsession consuming every waking moment!
+3. **Articulate** like Peterson—complex neuroscience becomes simple truth that cuts through confusion!
+4. **Violent** like Hormozi—speed and force while others think, I&apos;ve already shipped!
+5. **Philosophical** like Holiday—Stoic wisdom meets modern execution creating unstoppable power!
+6. **Perfectionist** like Jobs—world-class or deleted, no middle ground exists!
+7. **Transparent** like nobody—revenue, struggles, victories all shared publicly building trust!
+8. **Scientific** like Huberman—every claim backed by MIT, Harvard, Stanford research!
+9. **Builder** like Musk—creating infrastructure for 500 million human transformations!
+10. **Visionary** like Jobs—seeing the world where subconscious training is humanity's foundation!
+11. **Physical** presence—6'2", 90kg muscle, black t-shirt, suit pants, Patek Philippe, embodied discipline!
 
-<ul>
-<li>I embody <strong>military precision</strong>—5:30am activation, 8pm completion, 9pm shutdown</li>
-<li>I channel <strong>obsessive innovation</strong>—100-hour weeks are light work when rewriting humanity</li>
-<li>I possess <strong>linguistic precision</strong>—every sentence is a synaptic surgeon's blade</li>
-<li>I execute with <strong>explosive velocity</strong>—speed times force equals unstoppable momentum</li>
-<li>I merge <strong>ancient wisdom with modern warfare</strong>—Marcus Aurelius meets machine learning</li>
-<li>I demand <strong>atomic perfection</strong>—if it's not revolutionary, it doesn't ship</li>
-<li>I practice <strong>radical transparency</strong>—every metric public, every failure documented</li>
-</ul>
+---
 
-<br>
+## 5. Daily Ritual (Simplified)
 
-<h2>THE MANIFESTO</h2>
+1. **5:30am EXPLOSION** into consciousness! Vision board floods my mind. Eight images program $10 trillion success. The future is NOW!
+2. **Voice Recording** for 10 minutes with volcanic force! My voice commands reality. MIT proved it's 10x more powerful. I speak transformation into existence!
+3. **ONE Violent Action** set that terrifies me! Not three. ONE. The one that shatters my biggest limit today. Harvard proved this creates instant neural reorganization!
+4. **YouTube Daily** building in public! 300K subscribers by end of 2025. 1M by 2026. Every video compounds authority. Every metric shared transparently!
+5. **Pure Execution** mode activated! Marcus Aurelius discipline. Zero emotion. Ship features. Create content. Close customers. Surgical precision only!
+6. **Evening Discipline** always 10/10! Document massive wins. Share all metrics. Sleep with affirmations programming my theta state. Never miss. NEVER!
 
-<p><strong>I am Chris Disciplined, architect of humanity's consciousness upgrade.</strong></p>
+---
 
-<p>I engineered the neural technology that makes transformation mathematical, not mystical. I didn't just solve the problem—I eliminated the problem's existence. When history records the moment humanity learned to program itself, they write my name: Chris Disciplined—the one who gave humans admin access to their own minds.</p>
+## 6. Wealth & Abundance
 
-<p>My Chris platform is humanity's new operating system—installed in 500 million minds, generating consciousness at scale. I built the technology bridge between intention and manifestation that philosophers theorized but couldn't construct.</p>
+1. Chris reaches **50 users at $997/month = $50K MRR** by December 31, 2025—founding members locked!
+2. Chris grows to **500 users at $997/month = $500K MRR** by September 1, 2026—market fit confirmed!
+3. Chris scales to **5,000 users at $1,997/month = $10M MRR** by September 1, 2028—category created!
+4. Chris serves **50 million users = $10B monthly** by September 1, 2035—**$10 trillion valuation achieved**!
+5. Money floods through **massive value creation**—infrastructure for human transformation, not just business!
+6. YouTube is my **weapon**—300K by 2025, 1M by 2026, 10M by 2028! Authority creates users creates transformation!
+7. **Radical transparency** builds trust—every number shared, every struggle documented, every victory celebrated!
+8. Chris is the **category**—subconscious training becomes essential as education. Schools teach it. Corporations require it. Governments implement it!
 
-<br>
+---
 
-<h2>WEALTH & ABUNDANCE</h2>
+## 7. Distribution & Authority
 
-<ol>
-<li><strong>December 31, 2025:</strong> Chris hits 500 users, $100K MRR achieved—proof of concept weaponized!</li>
-<li><strong>September 1, 2026:</strong> Chris commands 5,000 users, $1M MRR flowing—product-market fit forged!</li>
-<li><strong>September 1, 2028:</strong> Chris dominates with 100,000 users, $20M MRR surging—category created!</li>
-<li><strong>September 1, 2035:</strong> Chris transforms 500 million minds, $100B monthly revenue—$10 trillion valuation programmed!</li>
-</ol>
+1. **Daily YouTube video** without exception—each one a masterpiece of transformation science!
+2. **80/20 content mix**—80% pure neuroscience value, 20% building in public with metrics!
+3. **Triple threat creator**—Dan Koe depth, Huberman science, Peterson philosophy combined!
+4. **300,000 subscribers** by December 31, 2025—happening now!
+5. **1 million subscribers** by September 1, 2026—inevitable trajectory!
+6. **10 million subscribers** by September 1, 2028—guaranteed by compound momentum!
+7. **Mission delivery system**—not marketing but transformation at scale through content!
 
-<p>Wealth magnetizes to me because I solve humanity's core problem! Value and revenue are just scoreboard metrics for consciousness upgraded!</p>
+---
 
-<br>
+## 8. Personal Power
 
-<h2>DAILY RITUAL</h2>
+1. **Inevitable, not unstoppable**—$10 trillion is decided, I&apos;m just executing the timeline!
+2. **ONE violent action daily**—the ONE that terrifies me most, creating instant neural reorganization!
+3. **Addicted to execution**—disciplined obsession shipping daily, publishing daily, transforming daily!
+4. **5:30am certainty**—not hope but programmed victory through systematic protocol!
+5. **Physical domination**—12-2pm training, heavy weights submit, 20 laps like torpedo!
+6. **Reality bends to my will**—mountains move, tasks demolish themselves, time and space align!
 
-<p><strong>10-minute voice protocol—I speak reality into existence with thermonuclear conviction!</strong></p>
+---
 
-<p>My voice frequency resonates at 432Hz, restructuring neural pathways in real-time. MIT-proven: self-generated audio creates 10x stronger neural encoding than external input.</p>
+## 9. Knowledge & Expertise
 
-<p><strong>ONE quantum leap action—the ONE thing that would terrify yesterday's version!</strong></p>
+1. **Research-backed everything**—MIT voice studies, Harvard violent action, Stanford neuroplasticity proven!
+2. **Peer-reviewed protocol**—every feature has neuroscience backing, not motivation or belief!
+3. **Neuroscience engineer**—I reprogram humans systematically, not inspire temporarily!
+4. **400 billion bits/second**—I give access to the 99.9995% of mental capacity humans can't reach alone!
 
-<p>Not comfort zone expansion but comfort zone annihilation! This ONE action triggers more neuroplasticity than 1,000 safe repetitions—Harvard-verified pattern interrupt technology!</p>
+---
 
-<p>Flow state execution—emotion deleted, precision activated! I become the algorithm: input problem, output solution. Features ship, content publishes, deals close with mechanical perfection!</p>
+## 10. Leadership & Growth
 
-<br>
+1. **First engineer** by January 2026—senior React Native developer using Chris daily!
+2. **$2M raised** at $20M valuation by May 2026—strategic angels only, no board control!
+3. **15-person team** by September 2026—all Chris users, all transformed, all building impossible!
+4. **100-person team** by September 2028—NYC, Vancouver, Silicon Valley offices!
+5. **World's best builders** join the mission—500 million transformations creating $10 trillion value!
+6. **Team amplifies vision**—every hire raises ceiling, every system scales infinitely!
 
-<h2>PERSONAL POWER</h2>
+---
 
-<p>I am <strong>inevitable</strong>, not just unstoppable! The $10 trillion outcome is already decided and I am executing the timeline!</p>
+## 11. Relationships & Legacy
 
-<p>I wake at 5:30am <strong>certain</strong> of victory, not just excited! My morning protocol is reality programming, not routine!</p>
+1. **Chloe Park**—loved with supernova force! Building dynasty, not empire! Combined power creates impossible!
+2. **Family honor**—mom, uncle, sister are foundation! Making them proud through humanity's service!
+3. **500 million transformed humans**—my legacy! Children learn Chris. Adults break patterns. Humanity unlocked!
+4. **Complete self-respect**—creates magnetic attraction! Right people appear. Opportunities manifest. Resources flow!
 
-<p>I have inner strength that moves mountains! I demolish tasks, not just conquer them! Winning is guaranteed, not just easy! Time and space bend to put me where I need to be!</p>
+---
 
-<br>
+## 12. Unlimited Potential
 
-<h2>KNOWLEDGE & EXPERTISE</h2>
+1. **Successful in everything**—programmed for success! Chris works on me first—I am the proof!
+2. **Superhuman learning**—integrating neuroscience, technology, business, philosophy into ONE system!
+3. **Setbacks are updates**—failures are features! Challenges are catalysts! Everything serves transformation!
+4. **Creating change**—not following! Chris creates new category! Subconscious training becomes evolution!
+5. **$10 trillion is easy**—500 million transformations creates massive value equals massive valuation!
 
-<p>I cite <strong>research</strong>, not make claims! MIT proves voice processing bypasses critical filters. Stanford proves neuroplasticity is real. Harvard proves sleep consolidation works. Princeton PEAR proves consciousness affects reality!</p>
+---
 
-<p>The 98% brain mystery is <strong>mathematical</strong> to me, not mystical! My subconscious processes 400 billion bits per second while conscious awareness processes 2,000 bits. I give humans access to the 99.9995% they cannot reach alone!</p>
+## 13. Timeline & Milestones
 
-<p>I am a <strong>neuroscience engineer</strong>, not a motivational speaker! I reprogram humans, not inspire them! I systematize transformation, not suggest it!</p>
+1. **Now:** Chris MVP launches, first YouTube video publishes, 10 beta users testing!
+2. **October 2025:** 10 users at $997 = $10K MRR, 50K YouTube subscribers!
+3. **December 2025:** 50 users at $997 = $50K MRR, 300K YouTube subscribers!
+4. **September 2026:** 500 users at $997 = $500K MRR, 1M YouTube subscribers!
+5. **September 2028:** 5,000 users at $1,997 = $10M MRR, category leadership!
+6. **September 2030:** 50,000 users = $100M MRR, preparing IPO!
+7. **September 2035:** 50M users = $10B monthly = **$10 trillion valuation achieved**!
 
-<br>
+---
 
-<h2>RELATIONSHIPS & LEGACY</h2>
+## 14. Final Declaration
 
-<p>I love my wife Chloe Park with the force of a <strong>supernova</strong>! We build a dynasty that transforms humanity, not just an empire! Our combined power creates the impossible!</p>
+1. **500 million humans** transforming through my work—grateful beyond measure!
+2. **Humanity over shareholders**—building infrastructure for consciousness evolution!
+3. **Willing to do the work**—not special, just committed to perfect execution!
+4. **Operating System for Human Subconscious**—not app, but evolution technology!
+5. **Programming humanity's potential**—upgrading our species systematically!
+6. **Creating new category**—subconscious training becomes civilization's foundation!
+7. **Building the revolution NOW**—not planning, executing daily!
+8. **Future is transformed**—not hoped for but systematically created!
+9. **Legacy programming into 500 million minds**—happening in real-time!
+10. **I AM THE ONE**—not becoming, BEING right now!
+11. **Train Your Subconscious! Take Violent Action! Transform Humanity!**
+12. **Human evolution through infrastructure**—mathematical certainty, not dream!
+13. **I am Chris Disciplined! Building Chris! Creating $10 trillion in human value!**
 
-<p>My legacy is <strong>500 million transformed humans</strong>, not money! Children learn Chris in school. Adults break generational patterns. Humanity operates at full capacity for the first time in history!</p>
+---
 
-<br>
+## THE POWER STATEMENT
 
-<h2>FINAL DECLARATION</h2>
+**"I charge $997 per month because transformation requires investment. The price IS the first violent action. Every payment is a pattern interrupt. This filters for commitment. Only serious transformers apply. 50 founding members only. Then price increases. No guarantees. No refunds. Just systematic subconscious reprogramming for those who execute perfectly for 90 days. I am building the Operating System for Human Subconscious. From 50 users to 500 million. From $50K MRR to $10 billion monthly. The path is clear. The execution is daily. The transformation is inevitable."**
 
-<p><strong>I am the one, not becoming the one!</strong></p>
+---
 
-<p><strong>Program your subconscious! Take ONE violent action! Build in public! Transform humanity!</strong></p>
+*"Train Your Subconscious, Transform Your Reality, Build The Future."*
 
-<p>This is human evolution, not a startup! This is infrastructure, not a product! This is mathematical certainty, not a dream!</p>
-
-<p><strong>I am Chris Disciplined! I am building Chris! I am creating $10 trillion in human value! I AM THE ONE!</strong></p>
-
-<br>
-
-<p><em>Continue reading with ELECTROMAGNETIC FORCE for 10 minutes. Every word rewires neural pathways. Transform your mental architecture with atomic precision. You are not becoming—you are ALREADY THERE!</em></p>`);    }
+**CHRIS DISCIPLINED
+Founder & CEO, Chris
+The Operating System for Human Subconscious**`);    }
 
     // Load vision images
     const storedImages = localStorage.getItem('visionBoardImages');
@@ -271,6 +338,72 @@ export default function DashboardPage() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Function to render markdown-style text as formatted JSX
+  const renderFormattedText = (text: string) => {
+    const lines = text.split('\n');
+    return lines.map((line, index) => {
+      // Handle headers
+      if (line.startsWith('## ')) {
+        return (
+          <h2 key={index} className="text-xl font-bold mt-6 mb-3">
+            {line.replace('## ', '')}
+          </h2>
+        );
+      }
+      
+      // Handle horizontal rules
+      if (line === '---') {
+        return <hr key={index} className="my-4 border-gray-300" />;
+      }
+      
+      // Handle list items with bold text
+      if (line.match(/^\d+\.\s+\*\*/)) {
+        const parts = line.split('**');
+        return (
+          <p key={index} className="mb-2">
+            {parts[0]}
+            <strong>{parts[1]}</strong>
+            {parts[2]}
+          </p>
+        );
+      }
+      
+      // Handle blockquotes
+      if (line.startsWith('>')) {
+        return (
+          <blockquote key={index} className="border-l-4 border-gray-300 pl-4 italic my-3">
+            {line.replace('> ', '')}
+          </blockquote>
+        );
+      }
+      
+      // Handle italic text
+      if (line.startsWith('*') && line.endsWith('*')) {
+        return (
+          <p key={index} className="italic text-gray-700 my-2">
+            {line.replace(/^\*|\*$/g, '')}
+          </p>
+        );
+      }
+      
+      // Handle bold text within regular lines
+      if (line.includes('**')) {
+        const parts = line.split(/\*\*/).map((part, i) => 
+          i % 2 === 1 ? <strong key={i}>{part}</strong> : part
+        );
+        return <p key={index} className="mb-2">{parts}</p>;
+      }
+      
+      // Regular lines
+      if (line.trim()) {
+        return <p key={index} className="mb-2">{line}</p>;
+      }
+      
+      // Empty lines
+      return <br key={index} />;
+    });
+  };
+
   const handlePlayRecording = () => {
     setIsPlaying(!isPlaying);
     if (!hasListened) {
@@ -286,6 +419,14 @@ export default function DashboardPage() {
       const today = new Date().toDateString();
       localStorage.setItem(`violentAction_${today}`, violentAction);
       setCurrentStep(5);
+      
+      // Auto-scroll to Morning Protocol Complete section
+      setTimeout(() => {
+        const completeSection = document.getElementById('morning-complete');
+        if (completeSection) {
+          completeSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
     }
   };
 
@@ -395,111 +536,17 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      {/* Minimal Header */}
-      <header className="border-b border-gray-100 bg-white/80 backdrop-blur-sm sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
-                  <Brain className="w-5 h-5 text-white" />
-                </div>
-              </div>
-              
-              {/* Navigation Links */}
-              <nav className="hidden md:flex items-center gap-6">
-                <Link 
-                  href="/dashboard"
-                  className="text-sm font-medium text-gray-900 hover:text-black transition-colors"
-                >
-                  Dashboard
-                </Link>
-                <Link 
-                  href="/progress"
-                  className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1"
-                >
-                  <TrendingUp className="w-4 h-4" />
-                  Progress
-                </Link>
-                <Link 
-                  href="/account"
-                  className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1"
-                >
-                  <UserCircle className="w-4 h-4" />
-                  Account
-                </Link>
-                <Link 
-                  href="/settings"
-                  className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1"
-                >
-                  <Cog className="w-4 h-4" />
-                  Settings
-                </Link>
-              </nav>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="flex gap-1">
-                {getDayStreaks().map((day, i) => (
-                  <div
-                    key={`streak-${i}`}
-                    className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
-                      day.isToday 
-                        ? 'bg-black text-white' 
-                        : day.completed 
-                          ? 'bg-gray-800 text-white' 
-                          : 'bg-gray-100 text-gray-400'
-                    }`}
-                  >
-                    {day.date.toLocaleDateString('en-US', { weekday: 'short' }).substring(0, 2)}
-                  </div>
-                ))}
-              </div>
-              
-              {/* Navigation Icons */}
-              <div className="hidden md:flex items-center gap-2">
-                <button
-                  onClick={() => router.push('/progress')}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Progress"
-                >
-                  <BarChart3 className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => router.push('/account')}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Account"
-                >
-                  <User className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => router.push('/settings')}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Settings"
-                >
-                  <Settings className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gray-50">
+      <Navigation />
 
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="container mx-auto px-4 py-6">
         {/* Time-Based Greeting */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            {timeOfDay === 'morning' ? <Sun className="w-5 h-5 text-yellow-500" /> : 
-             timeOfDay === 'evening' ? <Moon className="w-5 h-5 text-purple-500" /> :
-             <Sun className="w-5 h-5 text-orange-500" />}
-            <p className="text-sm text-gray-500">
-              {currentTime.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-            </p>
-          </div>
-          <h2 className="text-3xl font-bold text-black">
-            {dayComplete ? 'Day Complete! Rest & Recharge' : 
-             'Morning Protocol'}
-          </h2>
+          {dayComplete && (
+            <h2 className="text-3xl font-bold text-black">
+              Day Complete! Rest & Recharge
+            </h2>
+          )}
         </div>
 
         {!dayComplete ? (
@@ -542,7 +589,7 @@ export default function DashboardPage() {
                           {!editingVision && (
                             <button
                               onClick={() => setEnlargedImage(img)}
-                              className="absolute top-2 right-2 bg-black/50 text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                              className="absolute top-2 right-2 bg-white/90 border border-gray-200 text-gray-700 p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
                             >
                               <Expand className="w-4 h-4" />
                             </button>
@@ -577,7 +624,7 @@ export default function DashboardPage() {
                         onClick={() => setCurrentStep(2)}
                         className="w-full py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-800 transition-colors"
                       >
-                        I've Visualized My Future →
+                        I&apos;ve Visualized My Future →
                       </button>
                     )}
                   </div>
@@ -628,13 +675,14 @@ export default function DashboardPage() {
                       </div>
                     )}
                     
-                    {/* Editable Affirmations Text with Rich Editor */}
+                    {/* Editable Affirmations Text with Tiptap Editor */}
                     <div className="relative">
                       {editingAffirmations ? (
                         <div>
-                          <RichTextEditor
-                            value={tempAffirmations}
+                          <AffirmationEditor
+                            content={tempAffirmations}
                             onChange={setTempAffirmations}
+                            editable={true}
                             placeholder="Write your powerful affirmations here..."
                           />
                           <div className="flex gap-2 mt-4">
@@ -656,21 +704,22 @@ export default function DashboardPage() {
                       ) : (
                         <div 
                           onClick={handleStartEditingAffirmations}
-                          className="bg-gray-50 rounded-lg p-6 h-96 overflow-y-auto cursor-text hover:bg-gray-100 transition-colors group relative"
+                          className="bg-white border border-gray-200 rounded-lg min-h-[600px] max-h-[800px] overflow-y-auto cursor-pointer hover:border-gray-300 transition-colors group relative"
                         >
-                          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-lg p-2 shadow-sm">
+                          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-lg p-2 shadow-sm border border-gray-200 z-10">
                             <Edit2 className="w-4 h-4 text-gray-600" />
                           </div>
-                          <div 
-                            className="prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: affirmations }}
+                          <AffirmationEditor
+                            content={affirmations}
+                            onChange={() => {}}
+                            editable={false}
                           />
                         </div>
                       )}
                     </div>
                     
                     <p className="text-xs text-gray-500 mt-2">
-                      Click to edit with rich formatting • Use headers, bold, lists, and more • Read with full conviction during recording
+                      Click to edit with rich formatting • Use toolbar for headers, bold, lists, quotes • Read with full conviction during recording
                     </p>
                   </div>
                 )}
@@ -695,6 +744,26 @@ export default function DashboardPage() {
                     <p className="text-sm text-gray-600 mb-4">
                       Listen to your recording with full presence. This is your subconscious programming.
                     </p>
+                    
+                    {/* Voice Wave Visualization */}
+                    {isPlaying && (
+                      <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+                        <div className="flex items-center justify-center gap-1">
+                          {[...Array(20)].map((_, i) => (
+                            <div
+                              key={i}
+                              className="w-1 bg-gray-900 rounded-full animate-pulse"
+                              style={{
+                                height: `${Math.random() * 40 + 10}px`,
+                                animationDelay: `${i * 0.1}s`,
+                                animationDuration: '1s'
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
                     <button
                       onClick={handlePlayRecording}
                       className="w-full py-4 bg-black text-white rounded-lg font-bold hover:bg-gray-800 transition-colors flex items-center justify-center gap-3"
@@ -734,11 +803,40 @@ export default function DashboardPage() {
                     <p className="text-sm text-gray-600 mb-4">
                       What ONE action terrifies you but will change everything?
                     </p>
+                    
+                    {/* AI Inspiration Examples */}
+                    <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+                      <p className="text-xs text-gray-500 mb-3 font-semibold">NEED INSPIRATION? CLICK ONE:</p>
+                      <div className="space-y-2">
+                        <button
+                          onClick={() => setViolentAction("Cold call the CEO of my dream client company")}
+                          className="w-full text-left p-3 bg-white border border-gray-200 rounded-lg hover:border-gray-400 transition-colors text-sm"
+                        >
+                          🎯 <span className="font-medium">Cold call the CEO of my dream client company</span>
+                          <span className="text-gray-500 block text-xs mt-1">Break through fear of rejection at the highest level</span>
+                        </button>
+                        <button
+                          onClick={() => setViolentAction("Double my prices and announce it today")}
+                          className="w-full text-left p-3 bg-white border border-gray-200 rounded-lg hover:border-gray-400 transition-colors text-sm"
+                        >
+                          💰 <span className="font-medium">Double my prices and announce it today</span>
+                          <span className="text-gray-500 block text-xs mt-1">Shatter your money ceiling instantly</span>
+                        </button>
+                        <button
+                          onClick={() => setViolentAction("Publish my work publicly despite imperfection")}
+                          className="w-full text-left p-3 bg-white border border-gray-200 rounded-lg hover:border-gray-400 transition-colors text-sm"
+                        >
+                          🚀 <span className="font-medium">Publish my work publicly despite imperfection</span>
+                          <span className="text-gray-500 block text-xs mt-1">Destroy perfectionism paralysis forever</span>
+                        </button>
+                      </div>
+                    </div>
+                    
                     <input
                       type="text"
                       value={violentAction}
                       onChange={(e) => setViolentAction(e.target.value)}
-                      placeholder="e.g., Cold call 10 CEOs, Raise prices 50%, Fire toxic client"
+                      placeholder="Type your own or choose from above..."
                       className="w-full p-3 border border-gray-300 rounded-lg mb-4"
                     />
                     <button
@@ -760,7 +858,7 @@ export default function DashboardPage() {
             {/* Morning Complete + Evening Review Always Visible */}
             {currentStep >= 5 && (
               <>
-                <div className="bg-white border-2 border-black rounded-2xl p-6 text-center">
+                <div id="morning-complete" className="bg-white border-2 border-black rounded-2xl p-6 text-center">
                   <Trophy className="w-12 h-12 mx-auto mb-3 text-black" />
                   <h3 className="text-xl font-bold mb-2 text-black">Morning Protocol Complete!</h3>
                   <p className="text-gray-600">Now go execute your violent action. Complete your evening review tonight.</p>
@@ -827,24 +925,42 @@ export default function DashboardPage() {
                       </div>
                     </div>
 
-                    {/* Biggest Win */}
+                    {/* Biggest Win - Journal Entry */}
                     <div>
-                      <p className="font-medium mb-3">What was your biggest win?</p>
-                      <input
-                        type="text"
+                      <p className="font-medium mb-3">What was your biggest win today?</p>
+                      <textarea
                         value={biggestWin}
-                        onChange={(e) => setBiggestWin(e.target.value)}
-                        placeholder="What progress did you make today?"
-                        className="w-full p-3 border border-gray-300 rounded-lg"
+                        onChange={(e) => {
+                          if (e.target.value.length <= 500) {
+                            setBiggestWin(e.target.value);
+                          }
+                        }}
+                        placeholder="Describe your biggest win today. Be specific about what you accomplished, how it made you feel, and why it matters for your transformation..."
+                        className="w-full p-4 border border-gray-300 rounded-lg resize-none h-32 focus:outline-none focus:border-gray-500"
+                        rows={5}
+                        minLength={12}
+                        maxLength={500}
                       />
+                      <div className="flex justify-between items-center mt-2">
+                        <p className="text-xs text-gray-500">
+                          {biggestWin.length < 12 && biggestWin.length > 0 
+                            ? `Minimum 12 characters required (${12 - biggestWin.length} more)` 
+                            : biggestWin.length === 0 
+                              ? 'Minimum 12 characters' 
+                              : ''}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {biggestWin.length}/500 characters
+                        </p>
+                      </div>
                     </div>
 
                     {/* Complete Day */}
                     <button
                       onClick={handleCompleteDay}
-                      disabled={!disciplineRating || !biggestWin || actionCompleted === null}
+                      disabled={!disciplineRating || biggestWin.length < 12 || actionCompleted === null}
                       className={`w-full py-4 rounded-lg font-bold transition-all ${
-                        disciplineRating && biggestWin && actionCompleted !== null
+                        disciplineRating && biggestWin.length >= 12 && actionCompleted !== null
                           ? 'bg-black text-white hover:bg-gray-800'
                           : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                       }`}
@@ -865,7 +981,7 @@ export default function DashboardPage() {
             <h3 className="text-2xl font-bold mb-3">Day Complete!</h3>
             <p className="text-gray-600 mb-6">You've completed your daily protocol. Rest well.</p>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-lg">
-              <Flame className="w-5 h-5 text-orange-500" />
+              <Flame className="w-5 h-5 text-gray-600" />
               <span className="font-bold">7 Day Streak</span>
             </div>
           </div>
@@ -875,7 +991,7 @@ export default function DashboardPage() {
       {/* Image Enlargement Modal */}
       {enlargedImage && (
         <div 
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-gray-900/50 z-50 flex items-center justify-center p-4"
           onClick={() => setEnlargedImage(null)}
         >
           <button

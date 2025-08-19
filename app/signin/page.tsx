@@ -1,58 +1,64 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { ArrowRight, Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import Link from 'next/link';
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { ArrowRight, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react'
+import Link from 'next/link'
+import { useAuth } from '@/providers/supabase-auth-provider'
 
 export default function SigninPage() {
-  const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter()
+  const { signIn, signInWithGoogle } = useAuth()
+  const [showPassword, setShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
   const [formData, setFormData] = useState({
     email: '',
     password: ''
-  });
+  })
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+    e.preventDefault()
+    setIsLoading(true)
+    setError('')
     
-    // Mock signin - just simulate delay
-    setTimeout(() => {
-      // Save mock user data to localStorage
-      localStorage.setItem('mockUser', JSON.stringify({
-        name: 'Returning User',
-        email: formData.email,
-        isAuthenticated: true
-      }));
-      
-      // Navigate to dashboard (or wherever returning users should go)
-      router.push('/dashboard');
-    }, 1500);
-  };
+    try {
+      await signIn(formData.email, formData.password)
+      // Navigation handled in auth provider based on subscription status
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in')
+      setIsLoading(false)
+    }
+  }
 
-  const handleGoogleSignin = () => {
-    setIsLoading(true);
-    // Mock Google OAuth
-    setTimeout(() => {
-      localStorage.setItem('mockUser', JSON.stringify({
-        name: 'Google User',
-        email: 'user@gmail.com',
-        isAuthenticated: true
-      }));
-      router.push('/dashboard');
-    }, 1000);
-  };
+  const handleGoogleSignin = async () => {
+    setIsLoading(true)
+    setError('')
+    
+    try {
+      await signInWithGoogle()
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in with Google')
+      setIsLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-serif font-bold mb-2">DailyRich</h1>
+          <h1 className="text-4xl font-serif font-bold mb-2">Chris Disciplined</h1>
           <p className="text-gray-600">Welcome back! Sign in to continue</p>
         </div>
+
+        {/* Error Alert */}
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start">
+            <AlertCircle className="h-5 w-5 text-red-500 mr-3 mt-0.5" />
+            <p className="text-red-700 text-sm">{error}</p>
+          </div>
+        )}
 
         {/* Signin Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -80,9 +86,9 @@ export default function SigninPage() {
               <label className="block text-sm font-medium text-gray-700">
                 Password
               </label>
-              <a href="#" className="text-sm text-gray-600 hover:text-black">
+              <Link href="/auth/reset-password" className="text-sm text-gray-600 hover:text-black">
                 Forgot password?
-              </a>
+              </Link>
             </div>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -176,12 +182,12 @@ export default function SigninPage() {
 
         {/* Sign Up Link */}
         <p className="mt-8 text-center text-sm text-gray-600">
-          Don't have an account?{' '}
-          <Link href="/signup" className="font-medium text-black hover:underline">
-            Sign up
+          Don&apos;t have an account?{' '}
+          <Link href="/qualification" className="font-medium text-black hover:underline">
+            Get started
           </Link>
         </p>
       </div>
     </div>
-  );
+  )
 }
