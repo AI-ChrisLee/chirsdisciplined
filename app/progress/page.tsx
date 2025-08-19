@@ -18,6 +18,8 @@ export default function ProgressPage() {
 
   useEffect(() => {
     // Check authentication
+    if (typeof window === 'undefined') return;
+    
     const mockUser = localStorage.getItem('mockUser');
     if (!mockUser) {
       router.push('/signin');
@@ -47,9 +49,9 @@ export default function ProgressPage() {
         const date = new Date();
         date.setDate(today.getDate() - i);
         const dateStr = date.toDateString();
-        const hasRecording = localStorage.getItem(`recording_${dateStr}`);
-        const violentAction = localStorage.getItem(`violentAction_${dateStr}`);
-        const eveningData = localStorage.getItem(`eveningSession_${dateStr}`);
+        const hasRecording = typeof window !== 'undefined' ? localStorage.getItem(`recording_${dateStr}`) : null;
+        const violentAction = typeof window !== 'undefined' ? localStorage.getItem(`violentAction_${dateStr}`) : null;
+        const eveningData = typeof window !== 'undefined' ? localStorage.getItem(`eveningSession_${dateStr}`) : null;
         
         data.push({
           date: date,
@@ -89,9 +91,9 @@ export default function ProgressPage() {
       for (let day = 1; day <= lastDay.getDate(); day++) {
         const date = new Date(today.getFullYear(), today.getMonth(), day);
         const dateStr = date.toDateString();
-        const hasRecording = localStorage.getItem(`recording_${dateStr}`);
-        const violentAction = localStorage.getItem(`violentAction_${dateStr}`);
-        const eveningData = localStorage.getItem(`eveningSession_${dateStr}`);
+        const hasRecording = typeof window !== 'undefined' ? localStorage.getItem(`recording_${dateStr}`) : null;
+        const violentAction = typeof window !== 'undefined' ? localStorage.getItem(`violentAction_${dateStr}`) : null;
+        const eveningData = typeof window !== 'undefined' ? localStorage.getItem(`eveningSession_${dateStr}`) : null;
         const isFuture = date > today;
         
         data.push({

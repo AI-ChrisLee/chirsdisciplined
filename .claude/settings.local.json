@@ -37,7 +37,8 @@
       "Bash(VERCEL_TOKEN=GMb9LB9zKz0hzbQaimF4dmto vercel env add NEXT_PUBLIC_SUPABASE_URL production)",
       "Bash(VERCEL_TOKEN=GMb9LB9zKz0hzbQaimF4dmto vercel ls chris-disciplined --meta gitCommitSha=efcc02a)",
       "Bash(curl:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(VERCEL_TOKEN=GMb9LB9zKz0hzbQaimF4dmto vercel link --yes --project=chris-disciplined)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
