@@ -1,0 +1,32 @@
+# Robots.txt for Chris Disciplined
+# https://chrisdisciplined.com
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard/
+Disallow: /account/
+Disallow: /settings/
+Disallow: /progress/
+Disallow: /onboarding/
+Disallow: /test-auth/
+
+# Sitemap
+Sitemap: https://chrisdisciplined.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Allow search engines to crawl public pages
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /

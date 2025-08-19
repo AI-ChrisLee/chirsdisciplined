@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Play, Volume2, VolumeX, Mail, Youtube, Linkedin } from 'lucide-react';
+import Script from 'next/script';
+import { structuredData, organizationData } from './structured-data';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -22,7 +24,18 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
+      <Script
+        id="structured-data-product"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <Script
+        id="structured-data-org"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
+      />
+      <div className="min-h-screen bg-white">
       {/* Premium Container - Mobile Optimized */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-20">
         
@@ -178,5 +191,6 @@ export default function LandingPage() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
