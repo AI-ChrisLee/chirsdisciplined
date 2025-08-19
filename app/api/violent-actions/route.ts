@@ -129,13 +129,15 @@ export async function PUT(request: Request) {
     
     // If completed, increment times_completed in library
     if (completed && data.violent_action) {
-      await supabase.rpc('increment', {
-        table_name: 'violent_actions_library',
-        column_name: 'times_completed',
-        row_id: data.violent_action
-      }).catch(() => {
+      try {
+        await supabase.rpc('increment', {
+          table_name: 'violent_actions_library',
+          column_name: 'times_completed',
+          row_id: data.violent_action
+        })
+      } catch {
         // Ignore error if action not in library
-      })
+      }
     }
     
     return NextResponse.json({ 
