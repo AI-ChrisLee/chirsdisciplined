@@ -31,7 +31,7 @@ export async function GET(request: Request) {
     if (error) throw error
     
     // Generate personalized suggestions (placeholder for AI integration)
-    const suggestions = await generateViolentActionSuggestions(user.id, recentSessions, actions)
+    const suggestions = await generateViolentActionSuggestions(user.id, recentSessions || [], actions)
     
     return NextResponse.json(suggestions)
   } catch (error: unknown) {
