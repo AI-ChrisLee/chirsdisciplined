@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { ArrowRight, Play, Volume2, VolumeX, Mail, Youtube, Linkedin } from 'lucide-react';
 import Script from 'next/script';
 import { structuredData, organizationData } from './structured-data';
@@ -12,8 +13,14 @@ export default function LandingPage() {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handleApplyNow = () => {
+    router.prefetch('/qualification');
     router.push('/qualification');
   };
+
+  useEffect(() => {
+    router.prefetch('/qualification');
+    router.prefetch('/signin');
+  }, [router]);
 
   const handleVideoPlay = () => {
     setIsPlaying(true);
@@ -94,7 +101,7 @@ export default function LandingPage() {
         <div className="text-center mb-16 sm:mb-20 px-4 sm:px-0">
           <button
             onClick={handleApplyNow}
-            className="w-full sm:w-auto bg-black text-white px-8 sm:px-12 py-4 sm:py-5 text-base sm:text-lg font-medium rounded-lg hover:bg-gray-900 transition-all duration-300 inline-flex items-center justify-center gap-2 sm:gap-3 shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5"
+            className="w-full sm:w-auto bg-black text-white px-8 sm:px-12 py-4 sm:py-5 text-base sm:text-lg font-medium rounded-lg hover:bg-gray-900 transition-all duration-150 inline-flex items-center justify-center gap-2 sm:gap-3 shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5"
           >
             Get The Violent Morning Protocol
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -104,16 +111,13 @@ export default function LandingPage() {
           </p>
           <p className="text-gray-600 text-sm sm:text-base mt-2">
             Already a member?{' '}
-            <a 
+            <Link 
               href="/signin" 
-              onClick={(e) => {
-                e.preventDefault();
-                router.push('/signin');
-              }}
               className="text-black underline hover:no-underline transition-all"
+              prefetch
             >
               Sign in here
-            </a>
+            </Link>
           </p>
         </div>
 

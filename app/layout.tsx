@@ -55,7 +55,12 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
   themeColor: "#000000",
 };
 
@@ -67,8 +72,26 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link 
+          rel="preload" 
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" 
+          as="style"
+        />
+        <link 
+          rel="stylesheet" 
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+        />
+        <noscript>
+          <link 
+            rel="stylesheet" 
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+          />
+        </noscript>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />

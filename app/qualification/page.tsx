@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Target, Clock, DollarSign } from 'lucide-react';
 
@@ -16,6 +16,12 @@ export default function QualificationPage() {
   const [isQualified, setIsQualified] = useState(false);
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isPageLoading, setIsPageLoading] = useState(true);
+
+  useEffect(() => {
+    router.prefetch('/protocol-download');
+    setIsPageLoading(false);
+  }, [router]);
 
   const questions = [
     {
@@ -190,15 +196,15 @@ export default function QualificationPage() {
                         });
                       }
                       
-                      // Add a small delay to show loading state
-                      await new Promise(resolve => setTimeout(resolve, 1500));
-                      
-                      // Redirect to protocol download page
+                      // Start transition immediately
+                      setIsLoading(true);
+                      await new Promise(resolve => setTimeout(resolve, 500));
                       router.push('/protocol-download');
                     } catch (error) {
                       console.error('Error:', error);
                       // Still redirect even if API fails
-                      await new Promise(resolve => setTimeout(resolve, 1500));
+                      setIsLoading(true);
+                      await new Promise(resolve => setTimeout(resolve, 500));
                       router.push('/protocol-download');
                     }
                   }}
@@ -231,6 +237,17 @@ export default function QualificationPage() {
 
   const currentQuestion = questions[currentStep - 1];
   const Icon = currentQuestion.icon;
+
+  if (isPageLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-gray-200 border-t-black rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
